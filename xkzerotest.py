@@ -19,8 +19,8 @@ get_foverfp = lambda x : x*np.log(x)/(1+np.log(x))
 
 EPS = 10e-10
 
-L1,delta,_,N1 = Newton(1.6, get_f, get_fp, get_foverfp, renvoyer_liste=(True), eps=EPS)
-L2,delta,_,N2 = dichotomie(0.5, 1.6, get_f, renvoyer_liste=(True), eps=EPS)
+L1,delta,_,N1 = Newton(1.6, get_f, get_fp, get_foverfp, return_list=(True), eps=EPS)
+L2,delta,_,N2 = dichotomie(0.5, 1.6, get_f, return_list=(True), eps=EPS)
 
 plt.figure()
 plt.plot([n for n in range(0,N1+1)], L1, label='Newton')

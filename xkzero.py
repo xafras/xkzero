@@ -4,20 +4,21 @@
 #   Ouvert le : Sat Jan 14 02:20:38 2023
 #   Fermé le : Sat Jan 14 02:20:38 2023
 
-#   Initialisation
-
-""" Ce package implemente la methode de Newton du premier ordre et la recherche
+"""
+Ce package implemente la methode de Newton du premier ordre et la recherche
 dichotomique de zero pour une fonction reelle dont l'espace d'arrive est muni
 d'une mesure quelconque. Cette methode ne prend pas en charge les fonctions a
-variables non reelles. """
+variables non reelles.
+"""
 
 #   Fonction
 
-def Newton(x0, get_f, get_fp, get_foverfp, get_mu=abs, eps=10**(-3), N=1000, renvoyer_liste=False, debug=False):
+
+def Newton(x0, get_f, get_fp, get_foverfp, get_mu=abs, eps=10**(-3), N=1000, return_list=False, debug=False):
     """ Methode de Newton pour approcher un zero proche de x0 de la fonction f
     de derivee fp et telle que foverfp = f/f'. Le zero est approche a eps pres
     selon la mesure mu.
-    
+
     Parametres
     ----------
     x0 : float
@@ -64,11 +65,12 @@ def Newton(x0, get_f, get_fp, get_foverfp, get_mu=abs, eps=10**(-3), N=1000, ren
         L.append(x - get_foverfp(x))
         if debug:
             print(f'Newton: n={n}, x={x}')
-    if renvoyer_liste:
-        return L,get_mu(get_f(x)),n!=N,n
-    return x,get_mu(get_f(x)),n!=N,n
+    if return_list:
+        return L, get_mu(get_f(x)), n != N, n
+    return x, get_mu(get_f(x)), n != N, n
 
-def dichotomie(xmin, xmax, get_f, get_mu=abs, eps=10**(-3), N=100, renvoyer_liste=False, debug=False):
+
+def dichotomie(xmin, xmax, get_f, get_mu=abs, eps=10**(-3), N=100, return_list=False, debug=False):
     """ Methode dichotomique de recherche de zero de la fonction f compris
     entre xmin et xmax. Le zero est approche a eps pres selon la mesure mu.
 
@@ -110,45 +112,46 @@ def dichotomie(xmin, xmax, get_f, get_mu=abs, eps=10**(-3), N=100, renvoyer_list
     m = (xmax+xmin)/2
     fm = get_f(m)
     L = [m]
-    while n < N and get_mu(fm) > eps :
+    while n < N and get_mu(fm) > eps:
         n += 1
-        if fm == 0 :
+        if fm == 0:
             break
-        elif fm < 0 :
+        elif fm < 0:
             xmin = m
-        else :
+        else:
             xmax = m
         m = (xmax+xmin)/2
         fm = get_f(m)
         L.append(m)
         if debug:
             print(f'Dichotomie: n={n}, x={m}')
-    if renvoyer_liste:
-        return L,get_mu(get_f(L[-1])),n!=N,n
-    return L[-1],get_mu(get_f(L[-1])),n!=N,n
+    if return_list:
+        return L, get_mu(get_f(L[-1])), n != N, n
+    return L[-1], get_mu(get_f(L[-1])), n != N, n
 
 #   Exemple
 
-if __name__=="__main__":    #   exemple avec x -> x**2 - 1 (suite de Heron)
-    
+
+if __name__ == "__main__":  # exemple avec x -> x**2 - 1 (suite de Heron)
+
     #   Newton
     def get_f(x):
         return x**2 - 2
-    
+
     def get_fp(x):
         return 2*x
-    
+
     def get_foverfp(x):
-        if x==0:
+        if x == 0:
             raise "Erreur : Division par zero :c"
         return x/2 - 1/x
-    
+
     def get_mu(x):
         return abs(x)
-    
-    print(Newton(1, get_f, get_fp, get_foverfp, get_mu,debug=(True)))
-    
+
+    print(Newton(1, get_f, get_fp, get_foverfp, get_mu, debug=(True)))
+
     #   Dichotomie
-    print(dichotomie(1, 4, get_f, debug=(True),renvoyer_liste=(True)))
+    print(dichotomie(1, 4, get_f, debug=(True), return_list=(True)))
 
 #   Fin

@@ -1,0 +1,2 @@
+#   xkZero
+Ce package implémente la méthode de Newton du premier ordre et la recherche dichotomique de zéro pour une fonction réelle dont l'espace d'arrivé est muni d'une mesure quelconque. Cette méthode ne prend pas en charge les fonctions à variables non réelles.
