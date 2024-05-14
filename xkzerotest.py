@@ -17,7 +17,7 @@ get_foverfp = lambda x : x*np.log(x)/(1+np.log(x))
 
 #   Exec
 
-EPS = 10e-10
+EPS = 10e-6
 
 L1,delta,_,N1 = Newton(1.6, get_f, get_fp, get_foverfp, return_list=(True), eps=EPS)
 L2,delta,_,N2 = dichotomie(0.5, 1.6, get_f, return_list=(True), eps=EPS)
